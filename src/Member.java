@@ -1,6 +1,20 @@
+/**
+ * Merepresentasikan satu member yang terdaftar di FitTrack.
+ * Class ini menyimpan data pribadi member dan memastikan setiap
+ * perubahan data lolos validasi sebelum disimpan.
+ */
 public class Member {
-    private String nama;
-    private String noTelepon;
+    // Konstanta batas validasi nomor telepon
+    private static final String AWALAN_TELEPON = "0";
+    private static final int MIN_PANJANG_TELEPON = 10;
+
+    // Nilai default yang aman jika data tidak valid
+    private static final String DEFAULT_NAMA = "Member Baru";
+    private static final String DEFAULT_NO_TELEPON = "080000000000";
+
+    // Atribut member dengan nilai awal default aman
+    private String nama = DEFAULT_NAMA;
+    private String noTelepon = DEFAULT_NO_TELEPON;
     private String tanggalDaftar;
     private String jenisPaket;
 
@@ -8,7 +22,18 @@ public class Member {
         return nama;
     }
 
+    /**
+     * Mengubah nama lengkap member setelah melalui validasi.
+     * Nama tidak boleh kosong atau hanya berisi spasi.
+     * Jika tidak valid, nama lama dipertahankan dan pesan penolakan dicetak.
+     *
+     * @param nama nama lengkap member baru
+     */
     public void setNama(String nama) {
+        if (nama == null || nama.trim().isEmpty()) {
+            System.out.println("Nama tidak boleh kosong atau hanya berisi spasi.");
+            return;
+        }
         this.nama = nama;
     }
 
@@ -16,7 +41,19 @@ public class Member {
         return noTelepon;
     }
 
+    /**
+     * Mengubah nomor telepon member setelah melalui validasi format.
+     * Jika format tidak valid, nomor lama dipertahankan dan pesan
+     * penolakan dicetak.
+     *
+     * @param noTelepon nomor telepon baru, wajib diawali angka 0
+     *                  dan memiliki panjang minimal 10 digit
+     */
     public void setNoTelepon(String noTelepon) {
+        if (noTelepon == null || !noTelepon.startsWith(AWALAN_TELEPON) || noTelepon.length() < MIN_PANJANG_TELEPON) {
+            System.out.println("Nomor telepon harus diawali angka 0 dan minimal " + MIN_PANJANG_TELEPON + " digit.");
+            return;
+        }
         this.noTelepon = noTelepon;
     }
 
