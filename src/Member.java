@@ -25,6 +25,35 @@ public class Member {
     private String tanggalDaftar = DEFAULT_TANGGAL_DAFTAR;
     private String jenisPaket = DEFAULT_JENIS_PAKET;
 
+    /**
+     * Constructor lengkap untuk membuat objek Member baru dengan seluruh data.
+     * Mengisi nilai atribut melalui setter untuk memastikan validasi berjalan (prinsip DRY).
+     *
+     * @param nama nama lengkap member
+     * @param noTelepon nomor telepon member
+     * @param tanggalDaftar tanggal pendaftaran member
+     * @param jenisPaket jenis paket keanggotaan (Basic, Premium, atau VIP)
+     */
+    public Member(String nama, String noTelepon, String tanggalDaftar, String jenisPaket) {
+        setNama(nama);
+        setNoTelepon(noTelepon);
+        setTanggalDaftar(tanggalDaftar);
+        setJenisPaket(jenisPaket);
+    }
+
+    /**
+     * Constructor tanpa paket untuk membuat objek Member baru.
+     * Memanggil constructor lengkap menggunakan kata kunci this(...)
+     * dengan jenis paket otomatis diisi paket default (Basic).
+     *
+     * @param nama nama lengkap member
+     * @param noTelepon nomor telepon member
+     * @param tanggalDaftar tanggal pendaftaran member
+     */
+    public Member(String nama, String noTelepon, String tanggalDaftar) {
+        this(nama, noTelepon, tanggalDaftar, PAKET_BASIC);
+    }
+
     public String getNama() {
         return nama;
     }
@@ -69,6 +98,10 @@ public class Member {
     }
 
     public void setTanggalDaftar(String tanggalDaftar) {
+        if (tanggalDaftar == null || tanggalDaftar.trim().isEmpty()) {
+            System.out.println("Tanggal daftar tidak boleh kosong.");
+            return;
+        }
         this.tanggalDaftar = tanggalDaftar;
     }
 
