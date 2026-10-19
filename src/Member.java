@@ -126,4 +126,17 @@ public class Member {
         }
         this.jenisPaket = jenisPaket;
     }
+
+    /**
+     * Mengembalikan representasi teks dari data member secara rapi dan berlabel.
+     *
+     * @return string berisi rincian data member yang terformat
+     */
+    @Override
+    public String toString() {
+        return "Member [Nama: " + nama + 
+               ", No Telepon: " + noTelepon + 
+               ", Tanggal Daftar: " + tanggalDaftar + 
+               ", Jenis Paket: " + jenisPaket + "]";
+    }
 }
