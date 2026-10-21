@@ -1,16 +1,41 @@
 /**
- * Class pengujian untuk memverifikasi fungsionalitas sistem keanggotaan gym FitTrack.
- * Class ini mengeksekusi skenario uji pembuatan objek Member, pengujian validasi data,
- * serta menampilkan daftar member menggunakan array dan perulangan.
+ * Class pengujian utama (driver class) untuk memverifikasi fungsionalitas sistem keanggotaan gym FitTrack.
+ * <p>
+ * Class ini bertanggung jawab untuk mengeksekusi empat skenario pengujian utama:
+ * <ol>
+ *   <li>Instansiasi minimal 4 objek {@link Member} ke dalam array dengan kombinasi paket berbeda
+ *       (Basic, Premium, VIP) serta pengujian constructor tanpa paket.</li>
+ *   <li>Pengujian penanganan validasi saat instansiasi menggunakan data yang melanggar aturan format
+ *       (misalnya nomor telepon tidak valid) dan pembuktian penggunaan nilai default aman.</li>
+ *   <li>Pengujian mekanisme setter pada objek yang telah terbuat untuk membuktikan bahwa data lama
+ *       tetap dipertahankan saat menerima input tidak valid.</li>
+ *   <li>Menampilkan representasi seluruh data member dari array menggunakan perulangan {@code for}
+ *       dan method {@code toString()} yang telah di-override.</li>
+ * </ol>
+ *
+ * @author Reza
+ * @version 1.0
  */
 public class TesFitTrack {
-    // Konstanta jumlah member untuk inisialisasi array (minimal 4 objek sesuai spesifikasi)
+    /**
+     * Kapasitas elemen array untuk menyimpan data member gym FitTrack.
+     * Ditetapkan minimal 4 objek sesuai dengan spesifikasi tugas untuk menghindari magic number.
+     */
     private static final int JUMLAH_MEMBER = 4;
 
     /**
-     * Method utama untuk menjalankan program pengujian FitTrack.
+     * Constructor privat untuk mencegah pembuatan instansiasi objek dari driver class ini.
+     */
+    private TesFitTrack() {
+        // Menghindari instansiasi kelas pengujian
+    }
+
+    /**
+     * Titik masuk utama (entry point) eksekusi program pengujian FitTrack.
+     * Method ini menjalankan seluruh alur pembuatan objek, pengujian batas validasi,
+     * dan pencetakan data ke konsol secara berurutan.
      *
-     * @param args argumen command line (tidak digunakan)
+     * @param args argumen baris perintah (command line arguments) yang diteruskan saat aplikasi dijalankan
      */
     public static void main(String[] args) {
         System.out.println("==================================================");
