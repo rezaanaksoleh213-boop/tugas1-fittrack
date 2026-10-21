@@ -46,5 +46,11 @@ public class TesFitTrack {
         System.out.println("Mencoba mengubah nomor telepon Member 1 dengan format salah (tidak diawali 0)...");
         daftarMember[0].setNoTelepon("181234567890");
         System.out.println("Nomor telepon Member 1 setelah dicoba ubah: " + daftarMember[0].getNoTelepon());
+
+        // Skenario 4: Mencetak seluruh objek Member dari array memakai perulangan for dan toString()
+        System.out.println("\n--- 3. Daftar Seluruh Data Member FitTrack ---");
+        for (int i = 0; i < daftarMember.length; i++) {
+            System.out.println((i + 1) + ". " + daftarMember[i].toString());
+        }
     }
 }
