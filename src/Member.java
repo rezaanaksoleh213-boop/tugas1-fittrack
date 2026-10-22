@@ -1,22 +1,57 @@
 /**
- * Merepresentasikan satu member yang terdaftar di FitTrack.
- * Class ini menyimpan data pribadi member dan memastikan setiap
- * perubahan data lolos validasi sebelum disimpan.
+ * Merepresentasikan satu entitas member (anggota) yang terdaftar di gym FitTrack.
+ * <p>
+ * Class ini bertindak sebagai model data yang menerapkan prinsip enkapsulasi secara ketat.
+ * Setiap perubahan data wajib melalui validasi di method setter masing-masing, serta
+ * menjamin ketersediaan nilai default yang aman saat instansiasi.
+ *
+ * @author Reza
+ * @version 1.0
  */
 public class Member {
-    // Konstanta pilihan jenis paket keanggotaan
+    /**
+     * Konstanta jenis paket keanggotaan Basic.
+     */
     public static final String PAKET_BASIC = "Basic";
+
+    /**
+     * Konstanta jenis paket keanggotaan Premium.
+     */
     public static final String PAKET_PREMIUM = "Premium";
+
+    /**
+     * Konstanta jenis paket keanggotaan VIP.
+     */
     public static final String PAKET_VIP = "VIP";
 
-    // Konstanta batas validasi nomor telepon
+    /**
+     * Karakter awalan wajib untuk nomor telepon member.
+     */
     private static final String AWALAN_TELEPON = "0";
+
+    /**
+     * Batas panjang digit minimum untuk nomor telepon aktif member.
+     */
     private static final int MIN_PANJANG_TELEPON = 10;
 
-    // Nilai default yang aman jika data tidak valid
+    /**
+     * Nilai default aman untuk nama member jika input tidak valid.
+     */
     private static final String DEFAULT_NAMA = "Member Baru";
+
+    /**
+     * Nilai default aman untuk nomor telepon jika input tidak valid.
+     */
     private static final String DEFAULT_NO_TELEPON = "080000000000";
+
+    /**
+     * Nilai default aman untuk tanggal pendaftaran jika input tidak valid.
+     */
     private static final String DEFAULT_TANGGAL_DAFTAR = "01-01-2026";
+
+    /**
+     * Nilai default aman untuk paket keanggotaan jika input tidak valid.
+     */
     private static final String DEFAULT_JENIS_PAKET = PAKET_BASIC;
 
     // Atribut member dengan nilai awal default aman
@@ -30,7 +65,7 @@ public class Member {
      * Mengisi nilai atribut melalui setter untuk memastikan validasi berjalan (prinsip DRY).
      *
      * @param nama nama lengkap member
-     * @param noTelepon nomor telepon member
+     * @param noTelepon nomor telepon aktif member
      * @param tanggalDaftar tanggal pendaftaran member
      * @param jenisPaket jenis paket keanggotaan (Basic, Premium, atau VIP)
      */
@@ -47,13 +82,18 @@ public class Member {
      * dengan jenis paket otomatis diisi paket default (Basic).
      *
      * @param nama nama lengkap member
-     * @param noTelepon nomor telepon member
+     * @param noTelepon nomor telepon aktif member
      * @param tanggalDaftar tanggal pendaftaran member
      */
     public Member(String nama, String noTelepon, String tanggalDaftar) {
         this(nama, noTelepon, tanggalDaftar, PAKET_BASIC);
     }
 
+    /**
+     * Mengambil nama lengkap member.
+     *
+     * @return nama lengkap member
+     */
     public String getNama() {
         return nama;
     }
@@ -73,6 +113,11 @@ public class Member {
         this.nama = nama;
     }
 
+    /**
+     * Mengambil nomor telepon aktif member.
+     *
+     * @return nomor telepon member
+     */
     public String getNoTelepon() {
         return noTelepon;
     }
@@ -93,10 +138,22 @@ public class Member {
         this.noTelepon = noTelepon;
     }
 
+    /**
+     * Mengambil tanggal pendaftaran pertama kali member bergabung.
+     *
+     * @return tanggal pendaftaran member
+     */
     public String getTanggalDaftar() {
         return tanggalDaftar;
     }
 
+    /**
+     * Mengubah tanggal pendaftaran member setelah melalui validasi non-kosong.
+     * Jika tanggal tidak valid (null atau kosong), tanggal lama dipertahankan
+     * dan pesan penolakan dicetak.
+     *
+     * @param tanggalDaftar tanggal pendaftaran baru (format bebas konsisten)
+     */
     public void setTanggalDaftar(String tanggalDaftar) {
         if (tanggalDaftar == null || tanggalDaftar.trim().isEmpty()) {
             System.out.println("Tanggal daftar tidak boleh kosong.");
@@ -105,6 +162,11 @@ public class Member {
         this.tanggalDaftar = tanggalDaftar;
     }
 
+    /**
+     * Mengambil jenis paket keanggotaan aktif member.
+     *
+     * @return jenis paket keanggotaan (Basic, Premium, atau VIP)
+     */
     public String getJenisPaket() {
         return jenisPaket;
     }
