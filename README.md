@@ -24,7 +24,7 @@ Gunakan tabel dan panduan di bawah ini sebagai acuan pengerjaan setiap hari.
 | **10** | Hari 10 | `docs: lengkapi Javadoc pada seluruh method di class Member` | `[x] Selesai` | Melengkapi dokumentasi Javadoc untuk seluruh getter, setter, dan constructor di `Member.java` |
 | **11** | Hari 11 | `docs: lengkapi identitas praktikan dan deskripsi program di README` | `[x] Selesai` | Mengisi nama lengkap, NPM, kelas, dan ringkasan studi kasus di `README.md` |
 | **12** | Hari 12 | `docs: lengkapi tabel konsep OOP dan nilai default di README` | `[x] Selesai` | Menjelaskan konsep enkapsulasi, constructor overloading, DRY, dan alasan nilai default di `README.md` |
-| **13** | Hari 13 | `docs: tambahkan panduan eksekusi dan contoh output di README` | `[ ] Pending` | Menambahkan screenshot/teks output hasil running normal dan kasus penolakan validasi |
+| **13** | Hari 13 | `docs: tambahkan panduan eksekusi dan contoh output di README` | `[x] Selesai` | Menambahkan screenshot/teks output hasil running normal dan kasus penolakan validasi |
 | **14** | Hari 14 | `style: perapihan format kode dan verifikasi checklist pengumpulan` | `[ ] Pending` | Reformat code rapi, hapus debugging sementara, dan cek ulang daftar periksa sebelum submit |
 
 ---
@@ -102,22 +102,81 @@ tugas1-fittrack/
 - **Java Development Kit (JDK):** Versi 17 atau lebih baru
 - **Integrated Development Environment (IDE):** IntelliJ IDEA / VS Code / NetBeans
 
-### 7. Cara Menjalankan Program
-#### Melalui Command Line / Terminal:
-1. Masuk ke direktori root project:
+### 7. Cara Menjalankan Program (Panduan Eksekusi)
+
+#### Opsi 1: Melalui Command Line / Terminal
+1. Buka terminal (PowerShell / Command Prompt / Bash) dan arahkan ke direktori root project:
    ```bash
    cd tugas1-fittrack
    ```
-2. Kompilasi source code:
+2. Kompilasi seluruh file Java yang berada di dalam folder `src/` ke dalam folder `out/`:
    ```bash
    javac -d out src/*.java
    ```
-3. Jalankan class utama pengujian:
+3. Eksekusi driver class utama `TesFitTrack`:
    ```bash
    java -cp out TesFitTrack
    ```
 
-### 8. Penjelasan Pemilihan Nilai Default Saat Data Tidak Valid
+#### Opsi 2: Melalui Integrated Development Environment (IDE)
+1. **VS Code:**
+   - Buka folder `tugas1-fittrack` di VS Code.
+   - Pastikan *Extension Pack for Java* sudah terpasang.
+   - Buka file [src/TesFitTrack.java](file:///c:/Users/Hype%207%20AMD%20X8/Downloads/RemedialUtsPBO/tugas1-fittrack/src/TesFitTrack.java).
+   - Klik tombol **Run** atau **Debug** di atas method `main`.
+2. **IntelliJ IDEA:**
+   - Buka direktori `tugas1-fittrack` sebagai project.
+   - Set folder `src/` sebagai *Sources Root*.
+   - Buka [TesFitTrack.java](file:///c:/Users/Hype%207%20AMD%20X8/Downloads/RemedialUtsPBO/tugas1-fittrack/src/TesFitTrack.java) lalu klik ikon panah hijau (**Run 'TesFitTrack.main()'**).
+
+---
+
+### 8. Contoh Output Program
+
+Berikut adalah hasil eksekusi program `TesFitTrack` pada konsol:
+
+```text
+==================================================
+       SISTEM PENDATAAN MEMBER GYM FITTRACK       
+==================================================
+
+--- 1. Pendaftaran Member ke Sistem ---
+Member 1 berhasil didaftarkan.
+Member 2 berhasil didaftarkan.
+Member 3 berhasil didaftarkan.
+
+Pendaftaran Member 4 (Skenario input nomor telepon salah saat pembuatan):
+Nomor telepon harus diawali angka 0 dan minimal 10 digit.
+Member 4 berhasil didaftarkan dengan nomor telepon default aman.
+
+--- 2. Pengujian Validasi Setter (Nilai Lama Harus Bertahan) ---
+Nomor telepon Member 1 saat ini: 081234567890
+Mencoba mengubah nomor telepon Member 1 dengan format salah (tidak diawali 0)...
+Nomor telepon harus diawali angka 0 dan minimal 10 digit.
+Nomor telepon Member 1 setelah dicoba ubah: 081234567890
+
+--- 3. Daftar Seluruh Data Member FitTrack ---
+1. Member [Nama: Budi Santoso, No Telepon: 081234567890, Tanggal Daftar: 15-08-2026, Jenis Paket: Basic]
+2. Member [Nama: Siti Rahma, No Telepon: 085678901234, Tanggal Daftar: 16-08-2026, Jenis Paket: Premium]
+3. Member [Nama: Ahmad Fauzi, No Telepon: 087812345678, Tanggal Daftar: 17-08-2026, Jenis Paket: VIP]
+4. Member [Nama: Rian Pratama, No Telepon: 080000000000, Tanggal Daftar: 18-08-2026, Jenis Paket: Basic]
+```
+
+#### Analisis Skenario Output:
+1. **Skenario Constructor 3 Parameter (Default Paket):**
+   - Member 1 didaftarkan hanya dengan nama, nomor telepon, dan tanggal daftar. Sistem otomatis menetapkan paket `Basic` menggunakan delegasi `this(...)`.
+2. **Skenario Tiga Paket Berbeda:**
+   - Member 1 memiliki paket `Basic`, Member 2 memiliki paket `Premium`, dan Member 3 memiliki paket `VIP`, membuktikan ketiga konstanta paket valid dan dapat diterima.
+3. **Skenario Penolakan Input Salah saat Instansiasi (Constructor):**
+   - Member 4 diinstansiasi dengan nomor telepon tidak valid (`"123"`). Sistem menolak input tersebut dengan pesan peringatan *"Nomor telepon harus diawali angka 0 dan minimal 10 digit."* dan otomatis mengamankan data dengan menetapkan `DEFAULT_NO_TELEPON` (`080000000000`).
+4. **Skenario Penolakan Input Salah pada Setter (Nilai Lama Bertahan):**
+   - Pada bagian pengujian setter, Member 1 dicoba diubah nomor teleponnya menjadi `"999"`. Validasi setter menolak perubahan dan mempertahankan nilai lama (`081234567890`), membuktikan bahwa data tidak rusak atau menjadi `null`.
+5. **Skenario Tampilan Seluruh Member:**
+   - Seluruh data member dalam array berhasil dicetak menggunakan perulangan `for` dengan memanggil format rapi berlabel dari method override `toString()`.
+
+---
+
+### 9. Penjelasan Pemilihan Nilai Default Saat Data Tidak Valid
 
 Setiap atribut pada class `Member` dilengkapi dengan nilai default yang aman. Berikut alasan pemilihan masing-masing:
 
@@ -128,7 +187,9 @@ Setiap atribut pada class `Member` dilengkapi dengan nilai default yang aman. Be
 | `jenisPaket` | `DEFAULT_JENIS_PAKET` | `"Basic"` (via `PAKET_BASIC`) | Sesuai spesifikasi tugas, paket paling aman dan mendasar adalah tier `Basic`. Jika member belum menentukan pilihan, paket dasar otomatis diterapkan tanpa risiko pembebanan biaya tinggi. |
 | `tanggalDaftar` | `DEFAULT_TANGGAL_DAFTAR` | `"01-01-2026"` | Format tanggal standar konsisten `DD-MM-YYYY` sebagai fallback awal tahun. Memastikan atribut tidak pernah bernilai `null` saat diakses, sehingga program berjalan tanpa `NullPointerException`. |
 
-### 9. Batasan dan Pengembangan Lanjutan
+---
+
+### 10. Batasan dan Pengembangan Lanjutan
 - **Penyimpanan Sementara (In-Memory):** Data masih disimpan dalam array memori lokal sehingga akan tereset ketika program ditutup.
 - **Pengembangan Lanjutan:** Di masa mendatang sistem dapat dihubungkan ke basis data (seperti MySQL/SQLite) serta dilengkapi antarmuka grafis (GUI) atau pencarian member berdasarkan ID.
 
