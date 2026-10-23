@@ -23,7 +23,7 @@ Gunakan tabel dan panduan di bawah ini sebagai acuan pengerjaan setiap hari.
 | **9** | Hari 9 | `docs: tambah Javadoc lengkap pada class dan method TesFitTrack` | `[x] Selesai` | Menambahkan Javadoc standar pada class `TesFitTrack` dan method `main` |
 | **10** | Hari 10 | `docs: lengkapi Javadoc pada seluruh method di class Member` | `[x] Selesai` | Melengkapi dokumentasi Javadoc untuk seluruh getter, setter, dan constructor di `Member.java` |
 | **11** | Hari 11 | `docs: lengkapi identitas praktikan dan deskripsi program di README` | `[x] Selesai` | Mengisi nama lengkap, NPM, kelas, dan ringkasan studi kasus di `README.md` |
-| **12** | Hari 12 | `docs: lengkapi tabel konsep OOP dan nilai default di README` | `[ ] Pending` | Menjelaskan konsep enkapsulasi, constructor overloading, DRY, dan alasan nilai default di `README.md` |
+| **12** | Hari 12 | `docs: lengkapi tabel konsep OOP dan nilai default di README` | `[x] Selesai` | Menjelaskan konsep enkapsulasi, constructor overloading, DRY, dan alasan nilai default di `README.md` |
 | **13** | Hari 13 | `docs: tambahkan panduan eksekusi dan contoh output di README` | `[ ] Pending` | Menambahkan screenshot/teks output hasil running normal dan kasus penolakan validasi |
 | **14** | Hari 14 | `style: perapihan format kode dan verifikasi checklist pengumpulan` | `[ ] Pending` | Reformat code rapi, hapus debugging sementara, dan cek ulang daftar periksa sebelum submit |
 
@@ -78,13 +78,14 @@ FitTrack adalah program pendataan keanggotaan gym berbasis Java console yang dir
 
 ### 4. Konsep OOP yang Diterapkan
 
-| Konsep OOP | Lokasi Penerapan | Alasan Pemilihan |
-| :--- | :--- | :--- |
-| **Encapsulation** | Class `Member` (atribut `private`, method `getter`/`setter` `public`) | Melindungi atribut data member dari modifikasi langsung di luar class dan memusatkan logika validasi. |
-| **Prinsip DRY (Don't Repeat Yourself)** | Constructor class `Member` memanggil `setter` | Menghindari duplikasi aturan validasi antara constructor dan setter. |
-| **Constructor Overloading & `this(...)`** | Constructor 3 parameter memanggil constructor 4 parameter dengan `this(...)` | Memudahkan pembuatan member tanpa harus mengisi paket secara manual (otomatis `Basic`). |
-| **Polymorphism (Method Overriding)** | Method `toString()` pada class `Member` | Menggantikan representasi bawaan memori Java (`Object.toString`) dengan format teks yang berlabel dan informatif. |
-| **Array of Objects** | Array `Member[]` pada class `TesFitTrack` | Menyimpan sekumpulan data member dalam satu struktur data terpadu untuk diproses secara kolektif. |
+| No | Konsep OOP | Lokasi Penerapan (Class / Method / Baris) | Alasan Pemilihan |
+| :---: | :--- | :--- | :--- |
+| 1 | **Encapsulation** | Class `Member` — seluruh atribut bertipe `private`, akses hanya melalui `getter`/`setter` bertipe `public` | Melindungi data internal member dari modifikasi langsung di luar class. Setiap perubahan wajib melewati setter yang berisi logika validasi, sehingga integritas data terjaga secara terpusat. |
+| 2 | **Prinsip DRY (Don't Repeat Yourself)** | Constructor `Member(String, String, String, String)` — memanggil `setNama()`, `setNoTelepon()`, `setTanggalDaftar()`, `setJenisPaket()` | Menghindari duplikasi aturan validasi antara constructor dan setter. Jika aturan validasi berubah di kemudian hari, cukup diubah sekali di setter tanpa harus menyentuh constructor. |
+| 3 | **Constructor Overloading & `this(...)`** | Constructor `Member(String, String, String)` — memanggil `this(nama, noTelepon, tanggalDaftar, PAKET_BASIC)` | Menyediakan fleksibilitas pembuatan objek member: jika paket tidak diisi, otomatis menggunakan paket `Basic` tanpa duplikasi kode inisialisasi. Memanfaatkan keyword `this(...)` untuk mendelegasikan ke constructor utama. |
+| 4 | **Polymorphism (Method Overriding)** | Method `toString()` pada class `Member` — menggantikan `Object.toString()` | Mengubah representasi bawaan Java (alamat memori seperti `Member@1a2b3c`) menjadi format teks berlabel yang informatif dan mudah dibaca oleh pengguna saat mencetak data member ke konsol. |
+| 5 | **Array of Objects** | Array `Member[]` pada class `TesFitTrack` — `daftarMember = new Member[JUMLAH_MEMBER]` | Menyimpan sekumpulan objek member dalam satu struktur data terpadu sehingga dapat diproses secara kolektif menggunakan perulangan `for`, sesuai dengan skenario pengujian yang diminta di spesifikasi tugas. |
+| 6 | **Penggunaan Konstanta (`static final`)** | Class `Member` — `PAKET_BASIC`, `PAKET_PREMIUM`, `PAKET_VIP`, `AWALAN_TELEPON`, `MIN_PANJANG_TELEPON`, seluruh `DEFAULT_*` | Menghindari penggunaan magic number dan magic string. Memudahkan pemeliharaan kode: jika batas minimum digit nomor telepon berubah, cukup ubah satu konstanta. Meningkatkan keterbacaan dan konsistensi kode. |
 
 ### 5. Struktur Project
 ```text
@@ -117,11 +118,17 @@ tugas1-fittrack/
    ```
 
 ### 8. Penjelasan Pemilihan Nilai Default Saat Data Tidak Valid
-1. **Nama (`DEFAULT_NAMA = "Member Baru"`):** Dipilih agar sistem tetap mengenali bahwa ada entitas member yang terdaftar dan staf dapat segera mengidentifikasi untuk memperbarui nama member tersebut kemudian.
-2. **Nomor Telepon (`DEFAULT_NO_TELEPON = "080000000000"`):** Memenuhi kriteria minimal 10 digit dan diawali angka 0, sekaligus menandakan nomor dummy yang perlu dikonfirmasi ulang ke member.
-3. **Jenis Paket (`DEFAULT_JENIS_PAKET = "Basic"`):** Sesuai spesifikasi tugas, paket default paling aman dan mendasar adalah tier `Basic`.
-4. **Tanggal Daftar (`DEFAULT_TANGGAL_DAFTAR = "01-01-2026"`):** Format tanggal standar konsisten `DD-MM-YYYY` sebagai fallback jika tanggal tidak terisi.
+
+Setiap atribut pada class `Member` dilengkapi dengan nilai default yang aman. Berikut alasan pemilihan masing-masing:
+
+| Atribut | Konstanta Default | Nilai | Alasan Pemilihan |
+| :--- | :--- | :--- | :--- |
+| `nama` | `DEFAULT_NAMA` | `"Member Baru"` | Dipilih agar sistem tetap mengenali bahwa ada entitas member yang terdaftar meskipun nama belum diisi. Staf resepsionis dapat segera mengidentifikasi dan memperbarui nama member tersebut kemudian. |
+| `noTelepon` | `DEFAULT_NO_TELEPON` | `"080000000000"` | Memenuhi kedua kriteria validasi (diawali angka `0` dan panjang minimal 10 digit) sekaligus menandakan nomor dummy yang jelas bukan nomor asli, sehingga perlu dikonfirmasi ulang ke member. |
+| `jenisPaket` | `DEFAULT_JENIS_PAKET` | `"Basic"` (via `PAKET_BASIC`) | Sesuai spesifikasi tugas, paket paling aman dan mendasar adalah tier `Basic`. Jika member belum menentukan pilihan, paket dasar otomatis diterapkan tanpa risiko pembebanan biaya tinggi. |
+| `tanggalDaftar` | `DEFAULT_TANGGAL_DAFTAR` | `"01-01-2026"` | Format tanggal standar konsisten `DD-MM-YYYY` sebagai fallback awal tahun. Memastikan atribut tidak pernah bernilai `null` saat diakses, sehingga program berjalan tanpa `NullPointerException`. |
 
 ### 9. Batasan dan Pengembangan Lanjutan
 - **Penyimpanan Sementara (In-Memory):** Data masih disimpan dalam array memori lokal sehingga akan tereset ketika program ditutup.
 - **Pengembangan Lanjutan:** Di masa mendatang sistem dapat dihubungkan ke basis data (seperti MySQL/SQLite) serta dilengkapi antarmuka grafis (GUI) atau pencarian member berdasarkan ID.
+
