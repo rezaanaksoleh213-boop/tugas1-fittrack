@@ -25,7 +25,7 @@ Gunakan tabel dan panduan di bawah ini sebagai acuan pengerjaan setiap hari.
 | **11** | Hari 11 | `docs: lengkapi identitas praktikan dan deskripsi program di README` | `[x] Selesai` | Mengisi nama lengkap, NPM, kelas, dan ringkasan studi kasus di `README.md` |
 | **12** | Hari 12 | `docs: lengkapi tabel konsep OOP dan nilai default di README` | `[x] Selesai` | Menjelaskan konsep enkapsulasi, constructor overloading, DRY, dan alasan nilai default di `README.md` |
 | **13** | Hari 13 | `docs: tambahkan panduan eksekusi dan contoh output di README` | `[x] Selesai` | Menambahkan screenshot/teks output hasil running normal dan kasus penolakan validasi |
-| **14** | Hari 14 | `style: perapihan format kode dan verifikasi checklist pengumpulan` | `[ ] Pending` | Reformat code rapi, hapus debugging sementara, dan cek ulang daftar periksa sebelum submit |
+| **14** | Hari 14 | `style: perapihan format kode dan verifikasi checklist pengumpulan` | `[x] Selesai` | Reformat code rapi, hapus debugging sementara, dan cek ulang daftar periksa sebelum submit |
 
 ---
 
@@ -62,9 +62,9 @@ Setiap kali Anda selesai mengerjakan tugas untuk suatu hari:
 ### 1. Judul dan Identitas
 - **Mata Kuliah:** Praktikum Pemrograman Berorientasi Objek
 - **Tugas:** Remedial UTS / Tugas 1 - Sistem Keanggotaan Gym FitTrack
-- **Nama Lengkap:** [Isi Nama Anda]
-- **NPM:** [Isi NPM Anda]
-- **Kelas:** [Isi Kelas Praktikum Anda]
+- **Nama Lengkap:** Reza Nurhakim
+- **NPM:** 250810701100054
+- **Kelas:** Kelas Praktikum Pemrograman Berorientasi Objek
 
 ### 2. Deskripsi Singkat
 FitTrack adalah program pendataan keanggotaan gym berbasis Java console yang dirancang sebagai langkah awal digitalisasi pencatatan data member FitTrack yang sebelumnya manual. Program ini menjawab permasalahan pencatatan buku fisik yang sering tercecer, sulit dibaca, dan tidak efisien dengan menyediakan penyimpanan data member sementara selama aplikasi berjalan. Fokus utama sistem ini adalah menjamin validitas seluruh data (nama, awalan dan panjang nomor telepon, serta paket keanggotaan) menggunakan mekanisme validasi terpusat di setter serta penanganan nilai default yang aman saat data tidak valid.
@@ -192,4 +192,24 @@ Setiap atribut pada class `Member` dilengkapi dengan nilai default yang aman. Be
 ### 10. Batasan dan Pengembangan Lanjutan
 - **Penyimpanan Sementara (In-Memory):** Data masih disimpan dalam array memori lokal sehingga akan tereset ketika program ditutup.
 - **Pengembangan Lanjutan:** Di masa mendatang sistem dapat dihubungkan ke basis data (seperti MySQL/SQLite) serta dilengkapi antarmuka grafis (GUI) atau pencarian member berdasarkan ID.
+
+---
+
+### 11. Daftar Periksa Akhir (Checklist Verifikasi Tugas)
+
+Tabel berikut memverifikasi pemenuhan seluruh kriteria tugas remedial sebelum pengumpulan akhir:
+
+| No | Kriteria Penilaian / Spesifikasi | Status | Catatan Verifikasi |
+| :---: | :--- | :---: | :--- |
+| 1 | **Struktur Project & File Git** | `[x]` | Terdiri dari `src/Member.java`, `src/TesFitTrack.java`, `.gitignore`, dan `README.md`. |
+| 2 | **Enkapsulasi Ketat** | `[x]` | Seluruh 4 atribut pada `Member` bertipe `private`, akses hanya lewat getter/setter `public`. |
+| 3 | **Validasi Atribut Lengkap** | `[x]` | Validasi nama (tidak kosong/spasi), no telepon (awalan 0, min 10 digit), paket (`Basic`, `Premium`, `VIP`). |
+| 4 | **Konstanta & Nilai Default Aman** | `[x]` | Menggunakan `static final` untuk paket dan validasi; nilai default aman mencegah `null` / crash. |
+| 5 | **Constructor Overloading & DRY** | `[x]` | Constructor 4-param mendelegasikan validasi ke setter; constructor 3-param memanggil `this(...)`. |
+| 6 | **Override toString()** | `[x]` | Format output berlabel rapi menggantikan representasi default memori Java. |
+| 7 | **Pengujian Driver Class (`TesFitTrack`)** | `[x]` | Minimal 4 member, 3 paket berbeda, 1 tanpa paket, uji input salah constructor & setter, loop `for`. |
+| 8 | **Dokumentasi Javadoc** | `[x]` | Javadoc standar lengkap pada setiap class, konstanta, constructor, dan method. |
+| 9 | **Laporan Lengkap di README.md** | `[x]` | Memuat identitas, deskripsi, fitur, tabel OOP, instruksi eksekusi, contoh output, dan analisis default. |
+| 10 | **Konsistensi Commit Harian (14 Hari)** | `[x]` | Seluruh 14 tahap commit harian terlaksana secara bertahap dan berpola pesan konvensional. |
+
 
